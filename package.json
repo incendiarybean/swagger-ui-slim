@@ -1,0 +1,37 @@
+{
+    "name": "@incendiarybean/swagger-ui-slim",
+    "version": "1.0.0",
+    "description": "A slim no-config Swagger UI instance.",
+    "main": "dist/index.js",
+    "scripts": {
+        "test": "nodemon test/run.ts",
+        "build": "tsc --build"
+    },
+    "types": "dist/index.d.ts",
+    "keywords": [
+        "swagger",
+        "swagger",
+        "ui",
+        "express"
+    ],
+    "author": "Benjamin Weare",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.18.1",
+        "swagger-ui-dist": "^4.14.0"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.13",
+        "@types/node": "^18.7.6",
+        "@types/swagger-ui-dist": "^3.30.1",
+        "@typescript-eslint/eslint-plugin": "^5.33.1",
+        "eslint": "^8.22.0",
+        "eslint-config-standard-with-typescript": "^22.0.0",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-n": "^15.2.4",
+        "eslint-plugin-promise": "^6.0.0",
+        "nodemon": "^2.0.19",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.7.4"
+    }
+}
