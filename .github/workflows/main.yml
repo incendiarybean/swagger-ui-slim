@@ -36,7 +36,7 @@ jobs:
             - name: Publish package on NPM 📦
               if: github.ref == 'refs/heads/main'
               run: |
-                  echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > /.npmrc
+                  echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
                   npm publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_KEY }}
