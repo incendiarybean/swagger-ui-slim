@@ -10,7 +10,7 @@
         "build": "tsc --build"
     },
     "publishConfig": {
-        "registry": "https://npm.pkg.github.com"
+        "registry": "https://registry.npmjs.org/"
     },
     "types": "dist/index.d.ts",
     "keywords": [

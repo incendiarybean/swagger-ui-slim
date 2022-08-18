@@ -35,6 +35,6 @@ jobs:
 
             - name: Publish package on NPM 📦
               if: github.ref == 'refs/heads/main'
-              run: npm publish
+              run: npm publish --access public
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_KEY }}
