@@ -83,6 +83,6 @@ app.use("/api/docs", SwaggerUI.serve, SwaggerUI.build(spec, opts));
 
 This Repo is a recreation of [Swagger-UI-Express](https://github.com/scottie1984/swagger-ui-express).
 
-This UI is slightly smaller at 5.19KB vs Swagger-UI-Express' 20.9KB.
+This UI is slightly smaller at 7.4KB vs Swagger-UI-Express' 20.9KB.
 
 This does in this case mean less features.
