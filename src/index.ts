@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
+import type { OpenAPIV3 } from "openapi-types";
 
 const express = require("express");
 const swaggerUi = require("swagger-ui-dist");
@@ -59,7 +60,7 @@ const SwaggerUiTemplate: string = `
 
 /* FORMAT FUNCTIONS */
 const generateHTML = (
-    swaggerDoc: any,
+    swaggerDoc: OpenAPIV3.Document | undefined,
     { customSiteTitle, swaggerUrl, faviconUrl }: SwaggerOptions
 ) => {
     let SwaggerHTML;
@@ -87,7 +88,7 @@ const generateHTML = (
     return SwaggerHTML.replace("<% title %>", customSiteTitle || "Swagger UI");
 };
 
-const build = (spec: any, opts: any) => {
+const build = (spec: OpenAPIV3.Document, opts: SwaggerOptions) => {
     opts = opts || {};
     spec = spec || {};
 
