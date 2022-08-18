@@ -1,13 +1,16 @@
 {
-    "name": "@incendiarybean/swagger-ui-slim",
+    "name": "swagger-ui-slim",
     "version": "1.0.0",
     "description": "A slim no-config Swagger UI instance.",
     "main": "dist/index.js",
     "module": "dist/index.js",
-    "repository": "git://github.com/incendiarybean/swagger-ui-slim.git",
+    "repository": "https://github.com/incendiarybean/swagger-ui-slim.git",
     "scripts": {
         "test": "nodemon test/run.ts",
         "build": "tsc --build"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
     },
     "types": "dist/index.d.ts",
     "keywords": [
