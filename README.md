@@ -2,13 +2,17 @@
 
 ## Description
 
-This Repo is a lightweight, no-config required, Express based Swagger-UI implementation.
+This package is a lightweight, no-config required, Express based Swagger-UI implementation.
 
 It is designed for use with an Express hosted API.
 
 All you require is an OpenAPI Spec in a JSON format!
 
 ## Usage
+
+```bash
+npm install swagger-ui-slim
+```
 
 It works extremely similarly to Swagger-UI-Express with one big tweak - no extras.
 
@@ -79,10 +83,4 @@ app.use("/api/docs", SwaggerUI.serve, SwaggerUI.build(spec, opts));
 
 **NOTE**: Passing "_opts.swaggerUrl_" will overwrite a given JSON spec and display the spec from the provided URL.
 
-## Disclaimer
-
-This Repo is a recreation of [Swagger-UI-Express](https://github.com/scottie1984/swagger-ui-express).
-
-This UI is slightly smaller at 7.4KB vs Swagger-UI-Express' 20.9KB.
-
-This does in this case mean less features.
+This UI will only display a single service and display customisation is disabled. This is to provide a no-config setup.
