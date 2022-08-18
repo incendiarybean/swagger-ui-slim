@@ -8,16 +8,16 @@ let swaggerInit = "";
 interface SwaggerOptions {
     swaggerUrl?: string;
     customSiteTitle?: string;
-    favicon_url?: string;
+    faviconUrl?: string;
 }
 
 /* DECLARE TEMPLATES */
 const SwaggerOnloadTemplate: string = `
 window.onload = () => {
     <% swaggerOptions %>
-
-    const UrlMatch = window.location.search.match(/url=([^&]+)/);
+    
     let url;
+    const UrlMatch = window.location.search.match(/url=([^&]+)/);
     if (UrlMatch && UrlMatch.length > 1) {
         url = decodeURIComponent(UrlMatch[1]);
     } else {
@@ -25,7 +25,7 @@ window.onload = () => {
     }
 
     window.ui = SwaggerUIBundle({
-        url: url,
+        url: options.swaggerUrl || url,
         spec: options.swaggerDoc,
         dom_id: "#swagger-ui",
         deepLinking: true,
@@ -52,8 +52,7 @@ const SwaggerUiTemplate: string = `
     
     <script src="./swagger-ui-bundle.js"> </script>
     <script src="./swagger-ui-standalone-preset.js"> </script>
-    <script src="./swagger-ui-init.js"> </script>
-    <% customJs %>
+    <script src="./display-schema.js"> </script>
 </body>
 </html>
 `;
@@ -61,42 +60,52 @@ const SwaggerUiTemplate: string = `
 /* FORMAT FUNCTIONS */
 const generateHTML = (
     swaggerDoc: any,
-    { swaggerUrl, customSiteTitle, favicon_url }: SwaggerOptions
+    { customSiteTitle, swaggerUrl, faviconUrl }: SwaggerOptions
 ) => {
     let SwaggerHTML;
 
+    if (swaggerUrl) {
+        swaggerDoc = undefined;
+    }
+
     const initOptions = {
         swaggerDoc: swaggerDoc || undefined,
-        customOptions: {},
         swaggerUrl: swaggerUrl || undefined,
     };
 
     SwaggerHTML = SwaggerUiTemplate.replace(
         "<% favicon %>",
         `<link rel="icon" type="image/png" href="${
-            favicon_url || "./favicon-32x32.png"
+            faviconUrl || "./favicon-32x32.png"
         }" />`
     );
 
     swaggerInit = SwaggerOnloadTemplate.replace(
         "<% swaggerOptions %>",
-        stringify(initOptions)
+        `const options = ${JSON.stringify(initOptions)};`
     );
     return SwaggerHTML.replace("<% title %>", customSiteTitle || "Swagger UI");
 };
 
-const build = (swaggerJson: any, opts?: SwaggerOptions) => {
-    const options = opts || {};
+const build = (spec: any, opts: any) => {
+    opts = opts || {};
+    spec = spec || {};
 
-    const openApiVersion = swaggerJson.openapi.split(".")[0];
-    if (openApiVersion !== "3") {
-        console.warn(
-            "\x1b[33m%s\x1b[0m",
-            "[SWAGGER-UI-SLIM] This Slim-UI was designed around OpenAPI:3.0.0, any other version may not perform as intended."
-        );
+    if (!Object.keys(spec).length && !opts.swaggerUrl) {
+        throw new Error("Neither 'spec' or 'opts.swaggerUrl' were provided.");
     }
 
-    const html = generateHTML(swaggerJson, options);
+    if (Object.keys(spec).length) {
+        const openApiVersion = spec.openapi.split(".")[0];
+        if (openApiVersion !== "3") {
+            console.warn(
+                "\x1b[33m%s\x1b[0m",
+                "[SWAGGER-UI-SLIM] This Slim-UI was designed around OpenAPI:3.0.0, any other version may not perform as intended."
+            );
+        }
+    }
+
+    const html = generateHTML(spec, opts);
     return (req: Request, res: Response) => {
         res.send(html);
     };
@@ -105,7 +114,7 @@ const build = (swaggerJson: any, opts?: SwaggerOptions) => {
 const routeHandler = (req: Request, res: Response, next: NextFunction) => {
     if (req.path === "/package.json") {
         res.status(404).json({ message: "Not found." });
-    } else if (req.path === "/swagger-ui-init.js") {
+    } else if (req.path === "/display-schema.js") {
         res.set("Content-Type", "application/javascript");
         res.send(swaggerInit);
     } else {
@@ -118,25 +127,5 @@ const serveAssets = () => {
 };
 
 const serve = [routeHandler, serveAssets()];
-
-const stringify = function (obj: any) {
-    const placeholder = "____FUNCTIONPLACEHOLDER____";
-    const fns: any = [];
-    let json = JSON.stringify(
-        obj,
-        (key, value) => {
-            if (typeof value === "function") {
-                fns.push(value);
-                return placeholder;
-            }
-            return value;
-        },
-        2
-    );
-    json = json.replace(new RegExp('"' + placeholder + '"', "g"), function (_) {
-        return fns.shift();
-    });
-    return "const options = " + json + ";";
-};
 
 export { serve, build };
