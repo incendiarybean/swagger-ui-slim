@@ -1,0 +1,38 @@
+# This is a basic workflow that is manually triggered
+
+name: Build and Deploy
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+    push:
+        branches:
+            - main
+            - development
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Setup Node.js environment
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "14"
+                  cache: "npm"
+
+            - name: Update to NPM 8.6.0
+              run: |
+                  npm i -g npm@8.6.0
+                  echo Node Version: `node --version`
+                  echo NPM Version: `npm --version`
+
+            - name: Install dependencies and build 🔧
+              run: npm install && npm run build
+
+            - name: Publish package on NPM 📦
+              if: github.ref == 'refs/heads/main'
+              run: npm publish
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_KEY }}
