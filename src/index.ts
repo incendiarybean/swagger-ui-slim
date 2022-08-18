@@ -7,9 +7,9 @@ let swaggerInit = "";
 
 /* DECLARE TYPES */
 interface SwaggerOptions {
-    swaggerUrl?: string;
-    customSiteTitle?: string;
-    faviconUrl?: string;
+    swaggerUrl?: string | undefined;
+    customSiteTitle?: string | undefined;
+    faviconUrl?: string | undefined;
 }
 
 /* DECLARE TEMPLATES */
