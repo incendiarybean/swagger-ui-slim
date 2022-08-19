@@ -1,4 +1,4 @@
-import type { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, RequestHandler, Response } from "express";
 import type { OpenAPIV3 } from "openapi-types";
 
 const express = require("express");
@@ -17,12 +17,10 @@ const SwaggerOnloadTemplate: string = `
 window.onload = () => {
     <% swaggerOptions %>
     
-    let url;
+    let url = window.location.origin;
     const UrlMatch = window.location.search.match(/url=([^&]+)/);
     if (UrlMatch && UrlMatch.length > 1) {
         url = decodeURIComponent(UrlMatch[1]);
-    } else {
-        url = window.location.origin;
     }
 
     window.ui = SwaggerUIBundle({
@@ -85,10 +83,16 @@ const generateHTML = (
         "<% swaggerOptions %>",
         `const options = ${JSON.stringify(initOptions)};`
     );
-    return SwaggerHTML.replace("<% title %>", customSiteTitle || "Swagger UI");
+    return [
+        SwaggerHTML.replace("<% title %>", customSiteTitle || "Swagger UI"),
+        swaggerInit,
+    ];
 };
 
-const build = (spec: OpenAPIV3.Document, opts: SwaggerOptions) => {
+const build = (
+    spec: OpenAPIV3.Document,
+    opts: SwaggerOptions
+): RequestHandler => {
     opts = opts || {};
     spec = spec || {};
 
@@ -106,7 +110,8 @@ const build = (spec: OpenAPIV3.Document, opts: SwaggerOptions) => {
         }
     }
 
-    const html = generateHTML(spec, opts);
+    const html = generateHTML(spec, opts)[0];
+
     return (req: Request, res: Response) => {
         res.send(html);
     };
@@ -114,19 +119,17 @@ const build = (spec: OpenAPIV3.Document, opts: SwaggerOptions) => {
 
 const routeHandler = (req: Request, res: Response, next: NextFunction) => {
     if (req.path === "/package.json") {
-        res.status(404).json({ message: "Not found." });
-    } else if (req.path === "/display-schema.js") {
+        return res.status(404).json({ message: "Not found." });
+    } else if (req.path.endsWith("/display-schema.js")) {
         res.set("Content-Type", "application/javascript");
-        res.send(swaggerInit);
-    } else {
-        next();
+        return res.send(swaggerInit);
     }
+    return next();
 };
 
-const serveAssets = () => {
-    return express.static(swaggerUi.getAbsoluteFSPath(), { index: false });
-};
+const serveAssets = () =>
+    express.static(swaggerUi.getAbsoluteFSPath(), { index: false });
 
 const serve = [routeHandler, serveAssets()];
 
-export { serve, build };
+export { serve, build, generateHTML };

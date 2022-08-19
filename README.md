@@ -24,11 +24,10 @@ const spec = require("openapi.json");
 app.use("/api/docs", SwaggerUI.serve, SwaggerUI.build({ spec }));
 
 /* or import! */
-
 import { serve, build } from "swagger-ui-slim";
 const spec = require("openapi.json");
 
-app.use("/api/docs", serve, build({ spec }));
+app.use("/api/docs", serve, build(spec));
 app.listen(3000);
 ```
 

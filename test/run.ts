@@ -1,14 +1,14 @@
 const express = require("express");
 import { OpenAPIV3 } from "openapi-types";
 import { serve, build } from "../src/index";
-import spec from "./test-schema.json";
+import { schema } from "./test.data";
 
 const app = express();
 
 app.use(
     "/api-docs",
     serve,
-    build(spec as OpenAPIV3.Document, {
+    build(schema as OpenAPIV3.Document, {
         swaggerUrl: undefined,
     })
 );
