@@ -11,7 +11,7 @@ All you require is an OpenAPI Spec in a JSON format!
 ## Usage
 
 ```bash
-npm install swagger-ui-slim
+$ npm install swagger-ui-slim
 ```
 
 It works extremely similarly to Swagger-UI-Express with one big tweak - no extras.
@@ -21,7 +21,7 @@ It works extremely similarly to Swagger-UI-Express with one big tweak - no extra
 const SwaggerUI = require("swagger-ui-slim");
 const spec = require("openapi.json");
 
-app.use("/api/docs", SwaggerUI.serve, SwaggerUI.build({ spec }));
+app.use("/api/docs", SwaggerUI.serve, SwaggerUI.build(spec));
 
 /* or import! */
 import { serve, build } from "swagger-ui-slim";
