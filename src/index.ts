@@ -1,4 +1,5 @@
 import type { NextFunction, Request, RequestHandler, Response } from "express";
+
 import type { OpenAPIV3 } from "openapi-types";
 
 const express = require("express");
@@ -7,9 +8,9 @@ let swaggerInit = "";
 
 /* DECLARE TYPES */
 interface SwaggerOptions {
-    swaggerUrl?: string | undefined;
-    customSiteTitle?: string | undefined;
-    faviconUrl?: string | undefined;
+    swaggerUrl?: string;
+    customSiteTitle?: string;
+    faviconUrl?: string;
 }
 
 /* DECLARE TEMPLATES */
@@ -28,9 +29,9 @@ window.onload = () => {
         spec: options.swaggerDoc,
         dom_id: "#swagger-ui",
         deepLinking: true,
-        presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+        presets: [SwaggerUIBundle.presets.apis],
         plugins: [SwaggerUIBundle.plugins.DownloadUrl],
-        layout: "StandaloneLayout",
+        layout: "BaseLayout",
     });
 };
 `;
@@ -41,6 +42,11 @@ const SwaggerUiTemplate: string = `
 <head>
     <meta charset="UTF-8">
     <title><% title %></title>
+    <style>
+        h2, span {
+            font-weight: 100 !important;
+        }
+    </style>
     <link rel="stylesheet" type="text/css" href="./swagger-ui.css" />
     <link rel="stylesheet" type="text/css" href="index.css" />
     <% favicon %>
