@@ -1,6 +1,6 @@
 {
     "name": "swagger-ui-slim",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "A slim no-config Swagger UI instance.",
     "main": "dist/index.js",
     "module": "dist/index.js",
