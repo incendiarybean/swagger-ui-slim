@@ -44,7 +44,7 @@ const SwaggerUiTemplate: string = `
     <title><% title %></title>
     <style>
         html {
-            overflow: auto;
+            overflow: auto !important;
         }
         h2, span {
             font-weight: 100 !important;
