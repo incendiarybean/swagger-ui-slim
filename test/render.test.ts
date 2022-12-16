@@ -15,6 +15,7 @@ const SwaggerUiTemplate: string = `
     <style>
         html {
             overflow: auto !important;
+            overflow-y: unset;
         }
         h2, span {
             font-weight: 100 !important;
