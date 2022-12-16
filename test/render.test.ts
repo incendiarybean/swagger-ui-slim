@@ -1,4 +1,5 @@
 const SwaggerUI = require("../src");
+
 import {
     schema,
     swagger_options_with_spec,
@@ -11,6 +12,11 @@ const SwaggerUiTemplate: string = `
 <head>
     <meta charset="UTF-8">
     <title><% title %></title>
+    <style>
+        h2, span {
+            font-weight: 100 !important;
+        }
+    </style>
     <link rel="stylesheet" type="text/css" href="./swagger-ui.css" />
     <link rel="stylesheet" type="text/css" href="index.css" />
     <% favicon %>

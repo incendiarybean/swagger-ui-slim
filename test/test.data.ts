@@ -65,9 +65,9 @@ export const schema = {
 export const swagger_options_with_spec = {
     deepLinking: true,
     dom_id: "#swagger-ui",
-    layout: "StandaloneLayout",
+    layout: "BaseLayout",
     plugins: ["localhost"],
-    presets: [["apis"], "preset"],
+    presets: [["apis"]],
     spec: schema,
     url: "localhost",
 };
@@ -75,9 +75,9 @@ export const swagger_options_with_spec = {
 export const swagger_options_without_spec = {
     deepLinking: true,
     dom_id: "#swagger-ui",
-    layout: "StandaloneLayout",
+    layout: "BaseLayout",
     plugins: ["localhost"],
-    presets: [["apis"], "preset"],
+    presets: [["apis"]],
     spec: undefined,
     url: "https://petstore.swagger.io/v2/swagger.json",
 };
