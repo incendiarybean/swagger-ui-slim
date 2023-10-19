@@ -25,7 +25,7 @@ window.onload = () => {
     }
 
     window.ui = SwaggerUIBundle({
-        url: options.swaggerUrl || url,
+        url: options.swaggerUrl ?? url,
         spec: options.swaggerDoc,
         dom_id: "#swagger-ui",
         deepLinking: true,
@@ -78,14 +78,14 @@ const generateHTML = (
     }
 
     const initOptions = {
-        swaggerDoc: swaggerDoc || undefined,
-        swaggerUrl: swaggerUrl || undefined,
+        swaggerDoc: swaggerDoc ?? undefined,
+        swaggerUrl: swaggerUrl ?? undefined,
     };
 
     SwaggerHTML = SwaggerUiTemplate.replace(
         "<% favicon %>",
         `<link rel="icon" type="image/png" href="${
-            faviconUrl || "./favicon-32x32.png"
+            faviconUrl ?? "./favicon-32x32.png"
         }" />`
     );
 
@@ -94,7 +94,7 @@ const generateHTML = (
         `const options = ${JSON.stringify(initOptions)};`
     );
     return [
-        SwaggerHTML.replace("<% title %>", customSiteTitle || "Swagger UI"),
+        SwaggerHTML.replace("<% title %>", customSiteTitle ?? "Swagger UI"),
         swaggerInit,
     ];
 };
@@ -103,8 +103,8 @@ const build = (
     spec: OpenAPIV3.Document,
     opts: SwaggerOptions
 ): RequestHandler => {
-    opts = opts || {};
-    spec = spec || {};
+    opts = opts ?? {};
+    spec = spec ?? {};
 
     if (!Object.keys(spec).length && !opts.swaggerUrl) {
         throw new Error("Neither 'spec' or 'opts.swaggerUrl' were provided.");
