@@ -18,16 +18,16 @@ It works extremely similarly to Swagger-UI-Express with one big tweak - no extra
 
 ```js
 /* require */
-const SwaggerUI = require("swagger-ui-slim");
-const spec = require("openapi.json");
+const SwaggerUI = require('swagger-ui-slim');
+const spec = require('openapi.json');
 
-app.use("/api/docs", SwaggerUI.serve, SwaggerUI.build(spec));
+app.use('/api/docs', SwaggerUI.serve, SwaggerUI.build(spec));
 
 /* or import! */
-import { serve, build } from "swagger-ui-slim";
-const spec = require("openapi.json");
+import { serve, build } from 'swagger-ui-slim';
+const spec = require('openapi.json');
 
-app.use("/api/docs", serve, build(spec));
+app.use('/api/docs', serve, build(spec));
 app.listen(3000);
 ```
 
@@ -37,9 +37,9 @@ Now you're read to go!
 
 The following customisation is available:
 
--   Display from JSON spec
--   Display from URL provided spec
--   Provide Favicon & Title
+- Display from JSON spec
+- Display from URL provided spec
+- Provide Favicon & Title
 
 See examples below:
 
@@ -49,35 +49,35 @@ const spec = {
     /* insert spec here */
 };
 const opts = {
-    customSiteTitle: "Website Title",
-    faviconUrl: "/favicon.ico",
+    customSiteTitle: 'Website Title',
+    faviconUrl: '/favicon.ico',
 };
-app.use("/api/docs", SwaggerUI.serve, SwaggerUI.build(spec, opts));
+app.use('/api/docs', SwaggerUI.serve, SwaggerUI.build(spec, opts));
 
 /* Displays spec from JSON provided */
 const spec = {
     /* insert spec here */
 };
-app.use("/api/docs", SwaggerUI.serve, SwaggerUI.build(spec));
+app.use('/api/docs', SwaggerUI.serve, SwaggerUI.build(spec));
 
 /* Displays spec from URL provided in opts.swaggerUrl */
 const opts = {
-    customSiteTitle: "Website Title",
-    swaggerUrl: "https://petstore.swagger.io/v2/swagger.json",
-    faviconUrl: "/favicon.ico",
+    customSiteTitle: 'Website Title',
+    swaggerUrl: 'https://petstore.swagger.io/v2/swagger.json',
+    faviconUrl: '/favicon.ico',
 };
-app.use("/api/docs", SwaggerUI.serve, SwaggerUI.build(null, opts));
+app.use('/api/docs', SwaggerUI.serve, SwaggerUI.build(null, opts));
 
 /* Displays spec from from URL provided in opts.swaggerUrl and changes website's tab title/favicon */
 const spec = {
     /* insert spec here */
 };
 const opts = {
-    customSiteTitle: "Website Title",
-    swaggerUrl: "https://petstore.swagger.io/v2/swagger.json",
-    faviconUrl: "/favicon.ico",
+    customSiteTitle: 'Website Title',
+    swaggerUrl: 'https://petstore.swagger.io/v2/swagger.json',
+    faviconUrl: '/favicon.ico',
 };
-app.use("/api/docs", SwaggerUI.serve, SwaggerUI.build(spec, opts));
+app.use('/api/docs', SwaggerUI.serve, SwaggerUI.build(spec, opts));
 ```
 
 **NOTE**: Passing "_opts.swaggerUrl_" will overwrite a given JSON spec and display the spec from the provided URL.

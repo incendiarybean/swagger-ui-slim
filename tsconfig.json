@@ -3,8 +3,6 @@
         "target": "es6",
         "module": "CommonJS",
         "rootDir": "./src",
-        "moduleResolution": "node",
-        "baseUrl": "./",
         "outDir": "./dist",
         "esModuleInterop": true,
         "checkJs": true,
@@ -25,5 +23,6 @@
         "declaration": true,
         "resolveJsonModule": true
     },
+    "include": ["src"],
     "exclude": ["test", "dist", "*.config.js"]
 }

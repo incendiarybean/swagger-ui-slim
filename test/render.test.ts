@@ -1,10 +1,10 @@
-const SwaggerUI = require("../src");
+const SwaggerUI = require('../src');
 
 import {
     schema,
     swagger_options_with_spec,
     swagger_options_without_spec,
-} from "./test.data";
+} from './test.data';
 
 const SwaggerUiTemplate: string = `
 <!DOCTYPE html>
@@ -36,13 +36,13 @@ const SwaggerUiTemplate: string = `
 </html>
 `;
 
-const flatten = (str: string) => JSON.stringify(str.replace(/\s/g, ""));
+const flatten = (str: string) => JSON.stringify(str.replace(/\s/g, ''));
 
 afterEach(() => {
     jest.clearAllMocks();
 });
 
-test("Build throws if no spec or url is provided", () => {
+test('Build throws if no spec or url is provided', () => {
     try {
         SwaggerUI.build(null);
     } catch (e: any) {
@@ -52,11 +52,11 @@ test("Build throws if no spec or url is provided", () => {
     }
 });
 
-test("Build proceeds if only spec is provided", async () => {
+test('Build proceeds if only spec is provided', async () => {
     let manipulatedSwaggerUiTemplate = SwaggerUiTemplate.replace(
-        "<% favicon %>",
+        '<% favicon %>',
         `<link rel="icon" type="image/png" href="./favicon-32x32.png"/>`
-    ).replace("<% title %>", "SwaggerUI");
+    ).replace('<% title %>', 'SwaggerUI');
 
     const expectedHtml = flatten(manipulatedSwaggerUiTemplate);
 
@@ -71,17 +71,17 @@ test("Build proceeds if only spec is provided", async () => {
     output(req, res);
 });
 
-test("Build proceeds if only opt is provided", async () => {
+test('Build proceeds if only opt is provided', async () => {
     const opts = {
-        customSiteTitle: "test",
-        faviconUrl: "favTest",
-        swaggerUrl: "http://test.com",
+        customSiteTitle: 'test',
+        faviconUrl: 'favTest',
+        swaggerUrl: 'http://test.com',
     };
 
     let manipulatedSwaggerUiTemplate = SwaggerUiTemplate.replace(
-        "<% favicon %>",
+        '<% favicon %>',
         `<link rel="icon" type="image/png" href="favTest"/>`
-    ).replace("<% title %>", "test");
+    ).replace('<% title %>', 'test');
 
     const expectedHtml = flatten(manipulatedSwaggerUiTemplate);
 
@@ -96,13 +96,13 @@ test("Build proceeds if only opt is provided", async () => {
     output(req, res);
 });
 
-test("Provided URL overwrites SP", async () => {
+test('Provided URL overwrites SP', async () => {
     // @ts-ignore TS6133
-    const SwaggerUIStandalonePreset = jest.fn(() => "preset")();
+    const SwaggerUIStandalonePreset = jest.fn(() => 'preset')();
 
     const SwaggerUIBundle: any = jest.fn().mockImplementation();
-    SwaggerUIBundle.presets = { apis: ["apis"] };
-    SwaggerUIBundle.plugins = { DownloadUrl: "localhost" };
+    SwaggerUIBundle.presets = { apis: ['apis'] };
+    SwaggerUIBundle.plugins = { DownloadUrl: 'localhost' };
 
     const generatedOutput = SwaggerUI.generateHTML(schema, {});
 
@@ -110,7 +110,7 @@ test("Provided URL overwrites SP", async () => {
         ui: () => {},
         onload: () => {},
         location: {
-            origin: "localhost",
+            origin: 'localhost',
             search: {
                 match: jest.fn(() => []),
             },
@@ -121,16 +121,16 @@ test("Provided URL overwrites SP", async () => {
     eval(script);
     window.onload();
 
-    expect(SwaggerUIBundle).toBeCalledWith(swagger_options_with_spec);
+    expect(SwaggerUIBundle).toHaveBeenCalledWith(swagger_options_with_spec);
 });
 
-test("Options match provided schema", async () => {
+test('Options match provided schema', async () => {
     // @ts-ignore TS6133
-    const SwaggerUIStandalonePreset = jest.fn(() => "preset")();
+    const SwaggerUIStandalonePreset = jest.fn(() => 'preset')();
     const SwaggerUIBundle: any = jest.fn().mockImplementation();
 
-    SwaggerUIBundle.presets = { apis: ["apis"] };
-    SwaggerUIBundle.plugins = { DownloadUrl: "localhost" };
+    SwaggerUIBundle.presets = { apis: ['apis'] };
+    SwaggerUIBundle.plugins = { DownloadUrl: 'localhost' };
 
     const generatedOutput = SwaggerUI.generateHTML(schema, {});
 
@@ -138,7 +138,7 @@ test("Options match provided schema", async () => {
         ui: () => {},
         onload: () => {},
         location: {
-            origin: "localhost",
+            origin: 'localhost',
             search: {
                 match: jest.fn(() => []),
             },
@@ -149,26 +149,26 @@ test("Options match provided schema", async () => {
     eval(script);
     window.onload();
 
-    expect(SwaggerUIBundle).toBeCalledWith(swagger_options_with_spec);
+    expect(SwaggerUIBundle).toHaveBeenCalledWith(swagger_options_with_spec);
 });
 
-test("Options match provided opts", async () => {
+test('Options match provided opts', async () => {
     // @ts-ignore TS6133
-    const SwaggerUIStandalonePreset = jest.fn(() => "preset")();
+    const SwaggerUIStandalonePreset = jest.fn(() => 'preset')();
 
     const SwaggerUIBundle: any = jest.fn().mockImplementation();
-    SwaggerUIBundle.presets = { apis: ["apis"] };
-    SwaggerUIBundle.plugins = { DownloadUrl: "localhost" };
+    SwaggerUIBundle.presets = { apis: ['apis'] };
+    SwaggerUIBundle.plugins = { DownloadUrl: 'localhost' };
 
     const generatedOutput = SwaggerUI.generateHTML(null, {
-        swaggerUrl: "https://petstore.swagger.io/v2/swagger.json",
+        swaggerUrl: 'https://petstore.swagger.io/v2/swagger.json',
     });
 
     const window = {
         ui: () => {},
         onload: () => {},
         location: {
-            origin: "localhost",
+            origin: 'localhost',
             search: {
                 match: jest.fn(() => []),
             },
@@ -179,5 +179,5 @@ test("Options match provided opts", async () => {
     eval(script);
     window.onload();
 
-    expect(SwaggerUIBundle).toBeCalledWith(swagger_options_without_spec);
+    expect(SwaggerUIBundle).toHaveBeenCalledWith(swagger_options_without_spec);
 });

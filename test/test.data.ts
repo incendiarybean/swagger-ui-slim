@@ -1,56 +1,56 @@
 export const schema = {
-    openapi: "3.0.0",
+    openapi: '3.0.0',
     info: {
-        title: "Test API",
-        version: "0.1.0",
+        title: 'Test API',
+        version: '0.1.0',
     },
     servers: [
         {
-            url: "http://server:8080/",
-            description: "Local build",
+            url: 'http://server:8080/',
+            description: 'Local build',
         },
     ],
     tags: [
         {
-            name: "Tag",
-            description: "This is a tag description.",
+            name: 'Tag',
+            description: 'This is a tag description.',
         },
     ],
     components: {
         schemas: {
             test: {
-                required: ["message"],
+                required: ['message'],
                 properties: {
-                    message: { type: "string" },
+                    message: { type: 'string' },
                 },
             },
         },
     },
     security: [{ APIKeyAuth: [] }],
     paths: {
-        "/api/test": {
+        '/api/test': {
             get: {
-                tags: ["Test"],
-                summary: "Returns test!",
+                tags: ['Test'],
+                summary: 'Returns test!',
                 responses: {
-                    "200": {
-                        description: "Success",
+                    '200': {
+                        description: 'Success',
                         content: {
-                            "application/json": {
+                            'application/json': {
                                 schema: {
-                                    $ref: "#/components/schemas/test",
+                                    $ref: '#/components/schemas/test',
                                 },
                             },
                         },
                     },
                     default: {
-                        description: "Error",
+                        description: 'Error',
                         content: {
-                            "application/json": {
+                            'application/json': {
                                 schema: {
-                                    required: ["message"],
+                                    required: ['message'],
                                     properties: {
-                                        message: { type: "string" },
+                                        message: { type: 'string' },
                                     },
                                 },
                             },
@@ -64,20 +64,20 @@ export const schema = {
 
 export const swagger_options_with_spec = {
     deepLinking: true,
-    dom_id: "#swagger-ui",
-    layout: "BaseLayout",
-    plugins: ["localhost"],
-    presets: [["apis"]],
+    dom_id: '#swagger-ui',
+    layout: 'BaseLayout',
+    plugins: ['localhost'],
+    presets: [['apis']],
     spec: schema,
-    url: "localhost",
+    url: 'localhost',
 };
 
 export const swagger_options_without_spec = {
     deepLinking: true,
-    dom_id: "#swagger-ui",
-    layout: "BaseLayout",
-    plugins: ["localhost"],
-    presets: [["apis"]],
+    dom_id: '#swagger-ui',
+    layout: 'BaseLayout',
+    plugins: ['localhost'],
+    presets: [['apis']],
     spec: undefined,
-    url: "https://petstore.swagger.io/v2/swagger.json",
+    url: 'https://petstore.swagger.io/v2/swagger.json',
 };
