@@ -121,7 +121,7 @@ test("Provided URL overwrites SP", async () => {
     eval(script);
     window.onload();
 
-    expect(SwaggerUIBundle).toBeCalledWith(swagger_options_with_spec);
+    expect(SwaggerUIBundle).toHaveBeenCalledWith(swagger_options_with_spec);
 });
 
 test("Options match provided schema", async () => {
@@ -149,7 +149,7 @@ test("Options match provided schema", async () => {
     eval(script);
     window.onload();
 
-    expect(SwaggerUIBundle).toBeCalledWith(swagger_options_with_spec);
+    expect(SwaggerUIBundle).toHaveBeenCalledWith(swagger_options_with_spec);
 });
 
 test("Options match provided opts", async () => {
@@ -179,5 +179,5 @@ test("Options match provided opts", async () => {
     eval(script);
     window.onload();
 
-    expect(SwaggerUIBundle).toBeCalledWith(swagger_options_without_spec);
+    expect(SwaggerUIBundle).toHaveBeenCalledWith(swagger_options_without_spec);
 });

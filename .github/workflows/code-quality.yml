@@ -1,0 +1,38 @@
+# This is a basic cypress workflow that is automatically triggered
+
+name: Lint and run Cypress Tests
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+    workflow_call:
+    push:
+        branches:
+            - "*"
+            - "!main"
+
+jobs:
+    lint-code:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  ref: ${{ github.ref }}
+
+            - name: 🧼 Run Linter
+              run: |
+                  npm install --quiet
+                  npm run lint
+
+    test:
+        runs-on: ubuntu-latest
+        needs: [lint-code]
+
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  ref: ${{ github.ref }}
+
+            - name: 🧪 Run Jest tests
+              run: |
+                  npm test
