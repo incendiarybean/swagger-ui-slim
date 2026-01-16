@@ -1,6 +1,6 @@
 # This is a basic cypress workflow that is automatically triggered
 
-name: Lint and run Cypress Tests
+name: Lint and run Tests
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
