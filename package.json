@@ -7,6 +7,8 @@
     "repository": "https://github.com/incendiarybean/swagger-ui-slim.git",
     "scripts": {
         "test": "jest",
+        "lint": "prettier . -c",
+        "lint-fix": "prettier . -w",
         "build": "tsc --build"
     },
     "publishConfig": {
@@ -40,6 +42,7 @@
         "jest": "^30.2.0",
         "nodemon": "^3.1.11",
         "openapi-types": "^12.0.0",
+        "prettier": "^3.8.0",
         "ts-jest": "^29.4.6",
         "ts-node": "^10.9.2",
         "typescript": "^5.9.3",

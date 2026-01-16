@@ -1,10 +1,10 @@
-import type { NextFunction, Request, RequestHandler, Response } from "express";
+import type { NextFunction, Request, RequestHandler, Response } from 'express';
 
-import type { OpenAPIV3 } from "openapi-types";
+import type { OpenAPIV3 } from 'openapi-types';
 
-const express = require("express");
-const swaggerUi = require("swagger-ui-dist");
-let swaggerInit = "";
+const express = require('express');
+const swaggerUi = require('swagger-ui-dist');
+let swaggerInit = '';
 
 /* DECLARE TYPES */
 interface SwaggerOptions {
@@ -83,18 +83,18 @@ const generateHTML = (
     };
 
     SwaggerHTML = SwaggerUiTemplate.replace(
-        "<% favicon %>",
+        '<% favicon %>',
         `<link rel="icon" type="image/png" href="${
-            faviconUrl ?? "./favicon-32x32.png"
+            faviconUrl ?? './favicon-32x32.png'
         }" />`
     );
 
     swaggerInit = SwaggerOnloadTemplate.replace(
-        "<% swaggerOptions %>",
+        '<% swaggerOptions %>',
         `const options = ${JSON.stringify(initOptions)};`
     );
     return [
-        SwaggerHTML.replace("<% title %>", customSiteTitle ?? "Swagger UI"),
+        SwaggerHTML.replace('<% title %>', customSiteTitle ?? 'Swagger UI'),
         swaggerInit,
     ];
 };
@@ -111,11 +111,11 @@ const build = (
     }
 
     if (Object.keys(spec).length) {
-        const openApiVersion = spec.openapi.split(".")[0];
-        if (openApiVersion !== "3") {
+        const openApiVersion = spec.openapi.split('.')[0];
+        if (openApiVersion !== '3') {
             console.warn(
-                "\x1b[33m%s\x1b[0m",
-                "[SWAGGER-UI-SLIM] This Slim-UI was designed around OpenAPI:3.0.0, any other version may not perform as intended."
+                '\x1b[33m%s\x1b[0m',
+                '[SWAGGER-UI-SLIM] This Slim-UI was designed around OpenAPI:3.0.0, any other version may not perform as intended.'
             );
         }
     }
@@ -128,10 +128,10 @@ const build = (
 };
 
 const routeHandler = (req: Request, res: Response, next: NextFunction) => {
-    if (req.path === "/package.json") {
-        return res.status(404).json({ message: "Not found." });
-    } else if (req.path.endsWith("/display-schema.js")) {
-        res.set("Content-Type", "application/javascript");
+    if (req.path === '/package.json') {
+        return res.status(404).json({ message: 'Not found.' });
+    } else if (req.path.endsWith('/display-schema.js')) {
+        res.set('Content-Type', 'application/javascript');
         return res.send(swaggerInit);
     }
     return next();
